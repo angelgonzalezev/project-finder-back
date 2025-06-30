@@ -31,7 +31,7 @@ export class ProjectsController {
     } catch (error) {
       return {
         success: false,
-        message: `Error fetching project with id ${id}`,
+        message: 'Error fetching project details',
         error: error instanceof Error ? error.message : String(error),
       };
     }

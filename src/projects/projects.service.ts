@@ -1,13 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Project } from './entities/project-entity';
+import getProjectDetailsByIdQuery from './db/queries/getProjectDetailsById.query';
 
 @Injectable()
 export class ProjectsService {
   constructor(
     @InjectRepository(Project)
     private readonly projectRepository: Repository<Project>,
+    private readonly dataSource: DataSource,
   ) {}
 
   async getProjects(): Promise<Project[]> {
@@ -15,10 +17,10 @@ export class ProjectsService {
   }
 
   async getProjectById(id: number): Promise<Project> {
-    const project = await this.projectRepository.findOne({ where: { id } });
-    if (!project) {
-      throw new NotFoundException(`Project with id ${id} not found`);
-    }
-    return project;
+    const result: Project[] = await this.dataSource.query(
+      getProjectDetailsByIdQuery,
+      [id],
+    );
+    return result[0];
   }
 }

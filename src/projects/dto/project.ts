@@ -1,10 +1,13 @@
+import { Category } from './category';
+import { SubCategory } from './subcategory';
+
 export interface Project {
   id: number;
   title: string;
   organization: ProjectOrganization;
   projectLeader: ProjectLeader;
-  category: number;
-  subcategory: number;
+  category: Category;
+  subcategory: SubCategory;
   startDate: string;
   budget: ProjectBudget;
   totalHours: number;
