@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import mockProjects from 'src/mockData/mockProjects';
-import { Project } from './dto/project';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Project } from './entities/project-entity';
 
 @Injectable()
 export class ProjectsService {
-  private projects = mockProjects;
+  constructor(
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
+  ) {}
 
   async getProjects(): Promise<Project[]> {
-    return this.projects;
+    return this.projectRepository.find();
   }
 }
