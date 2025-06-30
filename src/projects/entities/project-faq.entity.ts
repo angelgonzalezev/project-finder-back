@@ -1,12 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { Project } from './project-entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Project } from './project.entity';
 
-@Entity()
+@Entity('project_faqs')
 export class ProjectFaq {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Project, (project) => project.faqs)
+  @JoinColumn({ name: 'project_id' })
   project: Project;
 
   @Column()

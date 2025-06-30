@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ProjectsModule } from './projects/projects.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Project } from './projects/entities/project-entity';
+import { Project } from './projects/entities/project.entity';
 import { Organization } from './projects/entities/project-organization.entity';
 import { Position } from './projects/entities/project-position.entity';
 import { ProjectFaq } from './projects/entities/project-faq.entity';
@@ -11,6 +11,7 @@ import { ProjectLeader } from './projects/entities/project-leader.entity';
 import { Skill } from './projects/entities/project-skill.entity';
 import { Specialty } from './projects/entities/project-specialty.entity';
 import { Budget } from './projects/entities/project-budget.entity';
+import { Category } from './projects/entities/project-category.entity';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { Budget } from './projects/entities/project-budget.entity';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       entities: [
+        Category,
         Project,
         Organization,
         Position,

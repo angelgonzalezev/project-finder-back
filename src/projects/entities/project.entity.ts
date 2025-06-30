@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 import { Organization } from './project-organization.entity';
 import { ProjectLeader } from './project-leader.entity';
@@ -12,6 +13,7 @@ import { Budget } from './project-budget.entity';
 import { ProjectGoal } from './project-goal.entity';
 import { ProjectFaq } from './project-faq.entity';
 import { Position } from './project-position.entity';
+import { Category } from './project-category.entity';
 
 @Entity('projects')
 export class Project {
@@ -29,8 +31,9 @@ export class Project {
   @JoinColumn({ name: 'project_leader_id' })
   projectLeader: ProjectLeader;
 
-  @Column({ name: 'category_id', nullable: true })
-  categoryId: number;
+  @ManyToOne(() => Category)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 
   @Column({ name: 'subcategory_id', nullable: true })
   subcategoryId: number;
@@ -56,8 +59,8 @@ export class Project {
   @Column({ name: 'published_at', type: 'timestamp', nullable: true })
   publishedAt: Date;
 
-  @OneToMany(() => Budget, (b) => b.project)
-  budget: Budget[];
+  @OneToOne(() => Budget, (b) => b.project)
+  budget: Budget;
 
   @OneToMany(() => ProjectGoal, (g) => g.project)
   goals: ProjectGoal[];

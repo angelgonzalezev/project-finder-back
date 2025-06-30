@@ -1,16 +1,31 @@
 import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ResponseDto } from 'src/dto/response.dto';
-import { Project } from './entities/project-entity';
+import { Project } from './entities/project.entity';
+import { Position } from './entities/project-position.entity';
 
-@Controller('projects')
+@Controller()
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
-  @Get()
+  @Get('all')
   async getAllProjects(): Promise<ResponseDto<Project[]>> {
     try {
       const projects = await this.projectsService.getProjects();
+      return { success: true, data: projects };
+    } catch (error) {
+      return {
+        success: false,
+        message: 'Error fetching projects',
+        error: error instanceof Error ? error.message : String(error),
+      };
+    }
+  }
+
+  @Get('positions')
+  async getPositions(): Promise<ResponseDto<Position[]>> {
+    try {
+      const projects = await this.projectsService.getPositions();
       return { success: true, data: projects };
     } catch (error) {
       return {

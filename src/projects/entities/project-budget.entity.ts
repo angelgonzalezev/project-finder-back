@@ -1,25 +1,19 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
-import { Project } from './project-entity';
+import { Entity, Column, OneToOne, JoinColumn, PrimaryColumn } from 'typeorm';
+import { Project } from './project.entity';
 
-@Entity()
+@Entity('budgets')
 export class Budget {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn({ name: 'project_id' })
+  projectId: number;
 
-  @OneToOne(() => Project, (project) => project.budget)
-  @JoinColumn()
+  @OneToOne(() => Project, (project) => project.budget, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'project_id' })
   project: Project;
 
-  @Column()
+  @Column({ name: 'hour_from' })
   hourFrom: number;
 
-  @Column()
+  @Column({ name: 'hour_to' })
   hourTo: number;
 
   @Column('decimal')

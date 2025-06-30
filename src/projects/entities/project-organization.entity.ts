@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Project } from './project-entity';
+import { Project } from './project.entity';
 
-@Entity()
+@Entity('organizations')
 export class Organization {
   @PrimaryGeneratedColumn()
   id: number;
@@ -12,7 +12,7 @@ export class Organization {
   @Column({ nullable: true })
   logo: string;
 
-  @Column({ nullable: true })
+  @Column({ name: 'industry_id', nullable: true })
   industryId: number;
 
   @OneToMany(() => Project, (project) => project.organization)
