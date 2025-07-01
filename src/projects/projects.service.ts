@@ -42,6 +42,8 @@ export class ProjectsService {
         'specialties',
         'project.organization',
         'project.category',
+        'project.subcategory',
+        'project.budget',
       ],
     });
   }

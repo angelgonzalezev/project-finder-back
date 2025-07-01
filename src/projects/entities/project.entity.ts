@@ -14,6 +14,7 @@ import { ProjectGoal } from './project-goal.entity';
 import { ProjectFaq } from './project-faq.entity';
 import { Position } from './project-position.entity';
 import { Category } from './project-category.entity';
+import { Subcategory } from './project-subcategory.entity';
 
 @Entity('projects')
 export class Project {
@@ -35,8 +36,9 @@ export class Project {
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
-  @Column({ name: 'subcategory_id', nullable: true })
-  subcategoryId: number;
+  @ManyToOne(() => Subcategory)
+  @JoinColumn({ name: 'subcategory_id' })
+  subcategory: Subcategory;
 
   @Column({ name: 'start_date', type: 'timestamp', nullable: true })
   startDate: Date;
