@@ -2,7 +2,6 @@ import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ResponseDto } from 'src/dto/response.dto';
 import { Position } from './entities/project-position.entity';
-import { Project } from './entities/project.entity';
 import { ProjectResponseDto } from './dto/project-response.dto';
 
 @Controller('projects')
@@ -40,7 +39,7 @@ export class ProjectsController {
   @Get(':id')
   async getProjectById(
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<ResponseDto<Project>> {
+  ): Promise<ResponseDto<ProjectResponseDto>> {
     try {
       const project = await this.projectsService.getProjectById(id);
       return { success: true, data: project };

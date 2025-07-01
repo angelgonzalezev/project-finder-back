@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Project } from './entities/project.entity';
-import getProjectDetailsByIdQuery from './db/queries/getProjectDetailsById.query';
 import { Position } from './entities/project-position.entity';
 import { ProjectResponseDto, ProjectStatus } from './dto/project-response.dto';
 import { Subcategory } from './entities/project-subcategory.entity';
@@ -18,8 +17,6 @@ export class ProjectsService {
 
     @InjectRepository(Subcategory)
     private readonly subcategoryRepository: Repository<Subcategory>,
-
-    private readonly dataSource: DataSource,
   ) {}
 
   private getSubcategories = async () => this.subcategoryRepository.find();
@@ -73,11 +70,38 @@ export class ProjectsService {
     });
   }
 
-  async getProjectById(id: number): Promise<Project> {
-    const result: Project[] = await this.dataSource.query(
-      getProjectDetailsByIdQuery,
-      [id],
-    );
-    return result[0];
+  async getProjectById(id: number): Promise<ProjectResponseDto> {
+    const project = await this.projectRepository.find({
+      where: { id },
+      relations: [
+        'budget',
+        'category',
+        'faqs',
+        'goals',
+        'projectLeader',
+        'organization',
+        'organization.industry',
+        'positions',
+        'positions.skills',
+        'positions.specialties',
+      ],
+    });
+
+    const subcategories = await this.getSubcategories();
+
+    const fixedProject = project.map((project: Project) => {
+      const projectSubcategoryId = project.subcategory;
+      const projectCategoryId = project.category.id;
+
+      const subcategoryId = projectCategoryId * 100 + projectSubcategoryId;
+
+      const _subcategory = subcategories.find(
+        (subcat) => subcat.id === subcategoryId,
+      );
+
+      return { ...project, subcategory: _subcategory ?? null };
+    });
+
+    return fixedProject[0];
   }
 }
