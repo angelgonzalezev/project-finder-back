@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 import { Project } from './project.entity';
+import { Industry } from './project-industry.entity';
 
 @Entity('organizations')
 export class Organization {
@@ -12,8 +20,9 @@ export class Organization {
   @Column({ nullable: true })
   logo: string;
 
-  @Column({ name: 'industry_id', nullable: true })
-  industryId: number;
+  @ManyToOne(() => Industry)
+  @JoinColumn({ name: 'industry_id' })
+  industry: Industry;
 
   @OneToMany(() => Project, (project) => project.organization)
   projects: Project[];

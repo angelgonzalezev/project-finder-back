@@ -11,6 +11,8 @@ import { ProjectLeader } from './entities/project-leader.entity';
 import { Skill } from './entities/project-skill.entity';
 import { Specialty } from './entities/project-specialty.entity';
 import { Budget } from './entities/project-budget.entity';
+import { Subcategory } from './entities/project-subcategory.entity';
+import { Industry } from './entities/project-industry.entity';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { Budget } from './entities/project-budget.entity';
       Skill,
       Specialty,
       Budget,
+      Subcategory,
+      Industry,
     ]),
   ],
   controllers: [ProjectsController],

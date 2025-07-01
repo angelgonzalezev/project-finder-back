@@ -13,6 +13,7 @@ import { Specialty } from './projects/entities/project-specialty.entity';
 import { Budget } from './projects/entities/project-budget.entity';
 import { Category } from './projects/entities/project-category.entity';
 import { Subcategory } from './projects/entities/project-subcategory.entity';
+import { Industry } from './projects/entities/project-industry.entity';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { Subcategory } from './projects/entities/project-subcategory.entity';
         Skill,
         Specialty,
         Budget,
+        Industry,
       ],
     }),
     ProjectsModule,
