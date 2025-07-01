@@ -1,32 +1,37 @@
+import { ProjectGoal } from '../entities/project-goal.entity';
+import { Industry } from '../entities/project-industry.entity';
 import { Category } from './category';
+import { Skill } from './skill';
+import { Specialty } from './specialty';
 import { SubCategory } from './subcategory';
 
-export interface Project {
+export interface ProjectResponseDto {
   id: number;
   title: string;
   organization: ProjectOrganization;
   projectLeader: ProjectLeader;
   category: Category;
-  subcategory: SubCategory;
-  startDate: string;
+  subcategory?: SubCategory | null;
+  startDate: Date;
   budget: ProjectBudget;
   totalHours: number;
   description: string;
-  goals: string[];
+  goals: ProjectGoal[];
   faqs: ProjectFaq[];
   status: string;
-  creationDate: string;
+  creationDate: Date;
   positions: ProjectPosition[];
   totalApplicationsAmount: number;
-  publishedAt: string | null;
+  publishedAt: Date | null;
 }
 
 export interface ProjectPosition {
   id: number;
+  project?: any;
   title: string;
-  skills: number[];
-  specialties: number[];
-  referralBonus: number | null;
+  skills: Skill[];
+  specialties: Specialty[];
+  referralBonus: number | string | null;
 }
 
 export interface ProjectFaq {
@@ -50,5 +55,13 @@ export interface ProjectOrganization {
   id: number;
   name: string;
   logo: string;
-  industry: number;
+  industry: Industry;
+}
+
+export enum ProjectStatus {
+  PUBLISHED = 'PUBLISHED',
+  ACTIVE = 'ACTIVE',
+  DRAFT = 'DRAFT',
+  COMPLETED = 'COMPLETED',
+  ARCHIVED = 'ARCHIVED',
 }
