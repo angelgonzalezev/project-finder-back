@@ -1,17 +1,27 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ResponseDto } from 'src/dto/response.dto';
 import { Position } from './entities/project-position.entity';
 import { ProjectResponseDto } from './dto/project-response.dto';
+import { FiltersRequestDto } from './dto/filters-request.dto';
 
 @Controller('projects')
 export class ProjectsController {
   constructor(private projectsService: ProjectsService) {}
 
-  @Get()
-  async getAllProjects(): Promise<ResponseDto<ProjectResponseDto[]>> {
+  @Post()
+  async getFilteredProjects(
+    @Body() filtersDto: FiltersRequestDto,
+  ): Promise<ResponseDto<ProjectResponseDto[]>> {
     try {
-      const projects = await this.projectsService.getProjects();
+      const projects = await this.projectsService.getProjects(filtersDto);
       return { success: true, data: projects };
     } catch (error) {
       return {
