@@ -1,3 +1,58 @@
+## Project Structure
+
+The project follows a modular structure, making it easy to maintain and scale. Below is an overview of the main folders and their purposes:
+
+```
+src/
+├── dto/                # Shared Data Transfer Objects (DTOs) used across the application
+│   └── response.dto.ts
+├── mockData/           # Mock data for testing and development
+│   └── mockProjects.ts
+├── projects/           # Main feature module for project-related logic
+│   ├── dto/            # DTOs specific to the projects module
+│   │   ├── category.ts
+│   │   ├── filters-request.dto.ts
+│   │   ├── industry.ts
+│   │   ├── project-response.dto.ts
+│   │   ├── skill.ts
+│   │   ├── specialty.ts
+│   │   └── subcategory.ts
+│   ├── entities/       # TypeORM entities representing database tables
+│   │   ├── project-budget.entity.ts
+│   │   ├── project-category.entity.ts
+│   │   ├── project-faq.entity.ts
+│   │   ├── project-goal.entity.ts
+│   │   ├── project-industry.entity.ts
+│   │   ├── project-leader.entity.ts
+│   │   ├── project-organization.entity.ts
+│   │   ├── project-position.entity.ts
+│   │   ├── project-skill.entity.ts
+│   │   ├── project-specialty.entity.ts
+│   │   ├── project-subcategory.entity.ts
+│   │   └── project.entity.ts
+│   ├── projects.controller.spec.ts  # Unit tests for the projects controller
+│   ├── projects.module.ts           # NestJS module definition for projects
+│   └── projects.service.ts          # Business logic for projects
+├── app.module.ts        # Root module of the application
+└── main.ts              # Entry point of the application
+```
+
+### Folder Descriptions
+
+- **dto/**: Contains shared DTOs used for data validation and transfer.
+- **mockData/**: Includes mock data files to facilitate testing and development.
+- **projects/**: Encapsulates all logic related to projects, including:
+  - **dto/**: DTOs specific to the projects domain.
+  - **entities/**: Database entity definitions for projects and related concepts.
+  - **projects.controller.spec.ts**: Test file for the projects controller.
+  - **projects.module.ts**: Module definition for dependency injection and organization.
+  - **projects.service.ts**: Service containing business logic for projects.
+- **app.module.ts**: The main application module that imports feature modules.
+- **main.ts**: The bootstrap file that starts the NestJS application.
+
+This structure helps keep the codebase organized, modular, and easy to extend as your application grows.
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
